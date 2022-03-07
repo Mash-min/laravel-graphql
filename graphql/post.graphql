@@ -1,0 +1,30 @@
+extend type Query {
+  posts: [Post!]! @paginate
+  post(id: ID @eq): Post @find
+}
+
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+  user_id: Int!
+  comments: [Comment]
+  user: User @belongsTo
+}
+
+type Mutation {
+  createPost(
+    title: String!
+    content: String!
+    user_id: ID!
+  ) : Post! @create
+
+  deletePost(id: ID!) : Post @delete
+
+  upsertPost(
+    id: ID!
+    title: String!
+    content: String!
+    user_id: ID!
+  ) : Post @upsert
+}
